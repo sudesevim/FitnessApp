@@ -1,9 +1,10 @@
 import React from "react";
-import { View, Text, Image} from 'react-native';
+import { View, Text, Image, TouchableWithoutFeedback} from 'react-native';
 import styles from "./ProductCard.style";
 
-const ProductCard = ({product}) => {
+const ProductCard = ({product, onSelect}) => {
     return(
+        <TouchableWithoutFeedback onPress={onSelect}>
         <View style={styles.container}>
             <Image
             style={styles.image}
@@ -16,6 +17,7 @@ const ProductCard = ({product}) => {
 
             </View>
         </View>
+        </TouchableWithoutFeedback>
     );
 };
 

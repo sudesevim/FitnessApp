@@ -1,30 +1,33 @@
+import React from "react-native";
 import { SafeAreaView, Text, FlatList, ActivityIndicator} from "react-native";
 import {API_URL} from '@env';
 
 import ProductCard from "../../components/ProductCard";
 import useFetch from "../../components/hooks/useFetch";
+import Loading from "../../components/Loading/Loading";
+import Error from "../../components/Error";
 
 
-const Products = () => {
-    const {loading, data, error} = useFetch(API_URL)
-    console.log("render");
-    console.log({loading, data: data.length, error});
-    console.log('-----------------------');
+const Products = ({navigation}) => {
+    const {loading, data, error} = useFetch(API_URL);
 
-    const renderProduct = ({item}) => <ProductCard product={item} />;
+    const handleProductSelect = () => {
+        navigation.navigate('DetailPage');
+    };
 
-    if(error) {
-        return <Text>{error}</Text>
-    }
+    const renderProduct = ({item}) => (
+    <ProductCard product={item} onSelect={handleProductSelect} />
+    ); 
 
     if(loading) {
-        return <ActivityIndicator size= "large" />;
+       return <Loading/>;
     }
-    return (
-        <SafeAreaView>
-            <FlatList data={data} renderItem={renderProduct}/>
-        </SafeAreaView>
-    );
+
+    if(error) {
+        return <Error/>;
+    }
+
+    return <FlatList data={data} renderItem={renderProduct}/>;
 };
 
 export default Products;
