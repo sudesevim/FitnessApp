@@ -11,12 +11,12 @@ import Error from "../../components/Error";
 const Products = ({navigation}) => {
     const {loading, data, error} = useFetch(API_URL);
 
-    const handleProductSelect = () => {
-        navigation.navigate('DetailPage');
+    const handleProductSelect = (id) => {
+        navigation.navigate('DetailPage', {id});
     };
 
     const renderProduct = ({item}) => (
-    <ProductCard product={item} onSelect={handleProductSelect} />
+    <ProductCard product={item} onSelect={() => handleProductSelect(item.id)} />
     ); 
 
     if(loading) {
